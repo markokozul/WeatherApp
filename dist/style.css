@@ -1,16 +1,69 @@
 body {
   margin: 0;
+  background-color: rgb(8, 14, 22);
+  color: white;
+}
+#container {
+  width: 80%;
+  padding: 20px;
+  margin: auto;
+  background-color: rgb(11, 19, 30);
+  display: flex;
+  flex-direction: row;
+}
+#column1 {
+  flex: 50;
+  padding: 0;
+}
+#column2 {
+  flex: 50;
 }
 #nav {
   width: 100%;
   height: 60px;
-  background-color: gray;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+#form {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+#form input[type="search"] {
+  flex: 92;
+  background-color: rgb(32, 43, 59);
+  border: none;
+  border-radius: 10px;
+  border-end-end-radius: 0px;
+  border-top-right-radius: 0px;
+  padding: 8px;
+  color: white;
+}
+#form button {
+  flex: 8;
+  background-color: rgb(32, 43, 59);
+  border: none;
+  border-radius: 10px;
+  border-start-start-radius: 0px;
+  border-bottom-left-radius: 0px;
+  color: white;
+}
+#form button:hover {
+  cursor: pointer;
+}
+#form button:hover i {
+  cursor: pointer;
+  -webkit-font-smoothing: subpixel-antialiased;
+  transform: translateZ(0) scale(1.5);
+  zoom: 0.8;
+  transition: 0.3s;
+  backface-visibility: hidden;
+}
+
 #box {
   width: 100%;
+  margin: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,11 +74,64 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 30px;
+  padding: 20px 0px;
 }
+
+#location {
+  margin: 0;
+}
+#temp-c {
+  font-size: 88px;
+  margin: 0px;
+}
+#condition {
+  opacity: 0.5;
+  margin: 0;
+}
+
 #box-2 {
   flex: 50;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+#forecast-12hr {
+  background-color: rgb(32, 43, 59);
+  padding: 10px;
+  border-radius: 30px;
+  width: 100%;
+  margin: auto;
+}
+#forecast-12hr > p {
+  margin: 20px;
+  opacity: 0.6;
+}
+#forecast-12hr-divbox {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.forecast-12hr-div {
+  text-align: center;
+  flex: 25;
+  border-right: 1px solid rgba(255, 255, 255, 0.6);
+}
+.forecast-12hr-div:last-child {
+  border: none;
+}
+.forecast-12hr-div * {
+  margin: 5px;
+}
+.forecast-12hr-div > p:nth-child(1) {
+  opacity: 0.6;
+}
+.forecast-12hr-div > p:nth-child(3) {
+  font-size: 24px;
+}
+.forecast-12hr-div > img {
+  width: 76px;
+  height: auto;
 }
