@@ -1,4 +1,5 @@
 import { API } from "./API";
+import { APIDataHandling } from "./APIDataHandling";
 
 const UIManager = (() => {
   const container = document.getElementById("container");
@@ -51,7 +52,7 @@ const UIManager = (() => {
     const search = document.getElementById("search");
 
     form.addEventListener("submit", (e) => {
-      API.getAPI(search.value);
+      APIDataHandling(search.value);
       console.log("Lol");
       e.preventDefault();
     });
@@ -71,7 +72,7 @@ const UIManager = (() => {
   const display12hForecastData = (data12h) => {
     const divs = document.querySelectorAll(".forecast-12hr-div");
     console.log("dijk");
-    for (let i = 0; i < divs.length; i++) {
+    for (let i = 0; i < 5; i++) {
       divs[
         i
       ].innerHTML = `<p>${data12h.time[i]}</p><img src="https://openweathermap.org/img/wn/${data12h.icon[i]}@2x.png"/><p>${data12h.temp_c[i]}°</p>`;
