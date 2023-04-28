@@ -3,11 +3,8 @@ import { getAPI } from "./API";
 
 const APIDataHandling = async (searchValue) => {
   const data = await getAPI(searchValue);
-
   const currentWeatherData = data.response;
   const weatherData12hr = data.response2;
-  const weatherData5Days = data.response3;
-  console.log(weatherData5Days);
 
   let usedCurrentWeatherData = {
     name: "",
@@ -43,56 +40,28 @@ const APIDataHandling = async (searchValue) => {
   }
   UIManager.display12hForecastData(usedWeatherData12hr);
 
-  const getCurrentDate = () => {
-    const date = new Date();
-
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-
-    if (parseInt(day) < 10) {
-      day = `0${day}`;
-    }
-    if (parseInt(month) < 10) {
-      month = `0${month}`;
-    }
-    let currentDate = `${year}-${month}-${day}`;
-
-    return currentDate;
+  let usedDetailedData = {
+    keys: [
+      "Feels like",
+      "Humidity",
+      "Pressure",
+      "Temperature",
+      "Max temp",
+      "Min temp",
+    ],
+    values: [],
   };
 
-  let usedWeatherData5Days = {
-    time: ["today"],
-    icon: [currentWeatherData.weather[0].icon],
-    temp_c: [currentWeatherData.main.temp],
-  };
-  function parseDate(input) {
-    let parts = input.split("-");
-    return new Date(parts[0], parts[1] - 1, parts[2]);
-  }
-  function getName(day) {
-    if (day == 0) return "Sunday";
-    else if (day == 1) return "Monday";
-    else if (day == 2) return "Tuesday";
-    else if (day == 3) return "Wednesday";
-    else if (day == 4) return "Thursday";
-    else if (day == 5) return "Friday";
-    return "Saturday";
-  }
-  for (let i = 1; i < weatherData5Days.forecast.forecastday.length; i++) {
-    const dt = weatherData5Days.forecast.forecastday[i].date;
-    const date = parseDate(dt);
-    const dayName = getName(date.getDay());
+  usedDetailedData.values.push(currentWeatherData.main.feels_like + "°");
+  usedDetailedData.values.push(currentWeatherData.main.humidity);
+  usedDetailedData.values.push(currentWeatherData.main.pressure);
+  usedDetailedData.values.push(currentWeatherData.main.temp + "°");
+  usedDetailedData.values.push(currentWeatherData.main.temp_max + "°");
+  usedDetailedData.values.push(currentWeatherData.main.temp_min + "°");
 
-    if (i === 1 && dt == getCurrentDate()) {
-    } else {
-      usedWeatherData5Days.time.push(dayName);
+  UIManager.displayDetailedData(usedDetailedData);
 
-      usedWeatherData5Days.icon.push(weatherData12hr.list[i].weather[0].icon);
-    }
-  }
-  console.log(usedWeatherData5Days);
-
+  console.log(usedDetailedData);
   console.log(currentWeatherData);
   console.log(weatherData12hr);
 };

@@ -1,12 +1,14 @@
-import { API } from "./API";
 import { APIDataHandling } from "./APIDataHandling";
 
 const UIManager = (() => {
-  const container = document.getElementById("container");
+  const content = document.getElementById("content");
 
   const initialPage = (() => {
-    container.innerHTML = `
-    <div id="column1">
+    content.innerHTML = `
+    <div id="container">
+    <div id="loader-container">
+    <div class="loader"></div>
+    </div>
       <nav id="nav">
           <form id="form">
             <input type="search" id="search" placeholder="Search for cities"/>
@@ -35,14 +37,19 @@ const UIManager = (() => {
             <div class="forecast-12hr-div"></div>
           </div>
         </div>
-      </div>
-      <div id="column2">
-        <div id="forecast-5days">
-        <div class="forecast-5days-div"></div>
-        <div class="forecast-5days-div"></div>
-        <div class="forecast-5days-div"></div>
-        <div class="forecast-5days-div"></div>
-        <div class="forecast-5days-div"></div>
+        <div id="details">
+          <p>Detailed forecast</p>
+
+          <div class ="details-row">
+           <div class="details-item"></div>
+           <div class="details-item"></div>
+           <div class="details-item"></div>
+          </div>
+          <div class ="details-row">
+           <div class="details-item"></div>
+           <div class="details-item"></div>
+           <div class="details-item"></div>
+           </div>
         </div>
       </div>`;
   })();
@@ -53,7 +60,6 @@ const UIManager = (() => {
 
     form.addEventListener("submit", (e) => {
       APIDataHandling(search.value);
-      console.log("Lol");
       e.preventDefault();
     });
   })();
@@ -71,22 +77,36 @@ const UIManager = (() => {
   };
   const display12hForecastData = (data12h) => {
     const divs = document.querySelectorAll(".forecast-12hr-div");
-    console.log("dijk");
     for (let i = 0; i < 5; i++) {
       divs[
         i
       ].innerHTML = `<p>${data12h.time[i]}</p><img src="https://openweathermap.org/img/wn/${data12h.icon[i]}@2x.png"/><p>${data12h.temp_c[i]}°</p>`;
     }
   };
-  const display5DaysForecastData = (data5Days) => {
-    const divs = document.querySelectorAll(".forecast-5days-div");
-    for (let i = 0; i < divs.length; i++) {
-      divs[
-        i
-      ].innerHTML = `<p>${data5Days.time[i]}</p><img src="https://openweathermap.org/img/wn/${data5Days.icon[i]}@2x.png"/><p>${data5Days.temp_c[i]}°</p>`;
+  const displayDetailedData = (detailedData) => {
+    const divs = document.querySelectorAll(".details-item");
+    for (let i = 0; i < detailedData.keys.length; i++) {
+      divs[i].innerHTML = `<p>${detailedData.keys[i]}</p>
+      <p>${detailedData.values[i]}</p>`;
     }
   };
-  return { displayCurrentForecastData, display12hForecastData };
+  const loadIndicator = (state) => {
+    const loader = document.getElementById("loader-container");
+    console.log(loader);
+
+    if (state === "active") {
+      loader.classList.add("active");
+    } else if (state === "done") {
+      loader.classList.remove("active");
+    }
+  };
+
+  return {
+    displayCurrentForecastData,
+    display12hForecastData,
+    displayDetailedData,
+    loadIndicator,
+  };
 })();
 
 export { UIManager };
